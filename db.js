@@ -1,8 +1,10 @@
 const Sequelize = require('sequelize');
 
 const directorModel = require('./models/director');
-const genreModel = require('./models/genre')
+const genreModel = require('./models/genre');
 const movieModel = require('./models/movie');
+const actorModel = require('./models/actor');
+const memberModel = require('./models/member');
 
 /*
     1) Nombre base de datos
@@ -19,6 +21,8 @@ const sequelize = new Sequelize('videoclub', 'root', 'uwu', {
 const Director = directorModel(sequelize, Sequelize);
 const Genre = genreModel(sequelize, Sequelize);
 const Movie = movieModel(sequelize, Sequelize);
+const Actor = actorModel(sequelize, Sequelize);
+const Member = memberModel(sequelize, Sequelize);
 
 // Un genero puede tener muchas peliculas
 Genre.hasMany(Movie, {as:'movies'});
@@ -38,4 +42,4 @@ sequelize.sync({ // Solo para el desarrollo
     console.log('Base de datos sincronizada');
 });
 
-module.exports = { Director , Genre  , Movie};
+module.exports = { Director, Genre, Movie, Actor, Member };

@@ -30,7 +30,7 @@ function replace(req, res, next){
         .then(object => {
             const description = req.body.description ? req.body.description : "";
             const status = req.body.status ? req.body.status : false;
-            objecto.update({
+            object.update({
                 description : description,
                 status : status
             }).then(obj => res.json(obj))
@@ -44,7 +44,7 @@ function update(req, res, next){
         .then(object => {
             const description = req.body.description ? req.body.description : object.description;
             const status = req.body.status ? req.body.status : object.status;
-            objecto.update({
+            object.update({
                 description : description,
                 status : status
             }).then(obj => res.json(obj))
