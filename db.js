@@ -5,6 +5,7 @@ const genreModel = require('./models/genre');
 const movieModel = require('./models/movie');
 const actorModel = require('./models/actor');
 const memberModel = require('./models/member');
+const movieActorModel = require('./models/movieActor');
 
 /*
     1) Nombre base de datos
@@ -23,6 +24,7 @@ const Genre = genreModel(sequelize, Sequelize);
 const Movie = movieModel(sequelize, Sequelize);
 const Actor = actorModel(sequelize, Sequelize);
 const Member = memberModel(sequelize, Sequelize);
+const MovieActor = movieActorModel(sequelize, Sequelize);
 
 // Un genero puede tener muchas peliculas
 Genre.hasMany(Movie, {as:'movies'});
@@ -34,7 +36,25 @@ Movie.belongsTo(Genre, {as:'genre'});
 Director.hasMany(Movie, {as:'movies'});
 
 // Una pelicula tiene un director
-Movie.belongsTo(Director, {as: 'director'})
+Movie.belongsTo(Director, {as: 'director'});
+
+// Un actor participa en muchas peliculas
+MovieActor.belongsTo(Movie, {foreingKey: 'movieId'});
+
+// En una pelicula participan muhos actores
+MovieActor.belongsTo(Actor, {foreingKey: 'actorId'});
+
+Movie.belongsToMany(Actor, {
+    foreingKey: 'actorId',
+    as: 'actors',
+    through: 'movies_actors' // por al tabla
+})
+
+Actor.belongsToMany(Movie,{
+    foreingKey: 'movieId',
+    as: 'movies',
+    through: 'movies_actors'
+});
 
 sequelize.sync({ // Solo para el desarrollo
     force: true
