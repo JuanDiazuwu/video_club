@@ -4,7 +4,7 @@ module.exports = (sequelize, type) => {
         name: type.STRING,
         lastName: type.STRING,
         address: type.STRING,
-        phone: type.DOUBLE,
+        phone: type.STRING,
         status: type.BOOLEAN   
     });
     return Member;

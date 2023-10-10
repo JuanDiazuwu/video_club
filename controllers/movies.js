@@ -1,5 +1,6 @@
 const express = require('express');
-const { Movie } = require('../db');
+const { Movie, Actor } = require('../db');
+const actor = require('../models/actor');
 
 function create(req, res, next){
     const title = req.body.title;
@@ -15,7 +16,7 @@ function create(req, res, next){
 }
 
 function list(req, res, next) {
-    Movie.findAll({include:['genre', 'director']}) // Criterios SQL
+    Movie.findAll({include:['genre', 'director', 'actors']}) // Criterios SQL
         .then(objects => res.json(objects))
         .catch(err => res.send(err));
 }
@@ -36,6 +37,19 @@ function destroy(req, res, next){
     res.send('Users destroy')
 }
 
+function addActor(req, res, next){
+    const idMovie = req.body.idMovie;
+    const idActor = req.body.idActor;
+
+    Movie.findByPk(idMovie)
+    .then(movie => {
+        Actor.findByPk(idActor).then(actor => {
+            movie.addActor(actor);
+            res.json(movie);
+        }).catch(err => res.send(err));
+    }).catch(err => res.send(err));
+}
+
 module.exports = {
-    create, list, index, replace, update, destroy
+    create, list, index, replace, update, destroy, addActor
 };
