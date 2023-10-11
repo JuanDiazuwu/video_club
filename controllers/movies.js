@@ -22,19 +22,39 @@ function list(req, res, next) {
 }
 
 function index(req, res, next){
-    res.send('Users index')
+    const id = req.params.id;
+    Movie.findByPk(id)
+        .then(object => res.json(object))
+        .catch(err => res.send(err));
 }
 
 function replace(req, res, next){
-    res.send('Users replace')
+    const id = req.params.id;
+    Movie.findByPk(id)
+        .then(object => {
+            const title = req.body.title ? req.body.title : "";
+            object.update({
+                title : title
+            }).then(obj => res.json(obj))
+            .catch(err => res.send(err));
+        }).catch(err => res.send(err));
 }
 
 function update(req, res, next){
-    res.send('Users update')
+    const id = req.params.id;
+    Movie.findByPk(id).then(object => {
+        const title = req.body.title ? req.body.title : object.title;
+        object.update({
+            title : title, 
+        }).then(obj => res.json(obj)).catch(err => res.send(err));
+    }).catch(err => res.send(err));
 }
 
 function destroy(req, res, next){
-    res.send('Users destroy')
+    const id = req.params.id;
+    Movie.destroy({ where: {id: id} })
+            .then(object => res.json(object))
+            .catch(err => res.send(err));
 }
 
 function addActor(req, res, next){

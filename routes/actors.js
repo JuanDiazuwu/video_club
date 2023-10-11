@@ -11,6 +11,8 @@ router.get('/:id', controller.index);
 
 router.put('/:id', controller.replace);
 
+router.patch('/movie', controller.addMovie);
+
 router.patch('/:id', controller.update);
 
 router.delete('/:id', controller.destroy);

@@ -1,9 +1,11 @@
 const express = require('express');
 const { Actor } = require('../db');
+const movie = require('../models/movie');
 
 function create(req, res, next){
     const name = req.body.name;
     const lastName = req.body.lastName;
+    
     Actor.create({
         name: name, 
         lastName: lastName
@@ -57,6 +59,19 @@ function destroy(req, res, next){
             .catch(err => res.send(err));
 }
 
+function addMovie(req, res, next){
+    const idMovie = req.body.idMovie;
+    const idActor = req.body.idActor;
+
+    Actor.findByPk(idActor)
+    .then(actor => {
+        Movie.findByPk(idMovie).then(movie => {
+            actor.addMovie(movie);
+            res.json(actor);
+        }).catch(err => res.send(err));
+    }).catch(err => res.send(err));
+}
+
 module.exports = {
-    create, list, index, replace, update, destroy
+    create, list, index, replace, update, destroy, addMovie
 };
