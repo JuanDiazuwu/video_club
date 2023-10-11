@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 
+const userModel = require('./models/user');
 const directorModel = require('./models/director');
 const genreModel = require('./models/genre');
 const movieModel = require('./models/movie');
@@ -19,6 +20,7 @@ const sequelize = new Sequelize('videoclub', 'root', 'uwu', {
     dialect: 'mysql'
 });
 
+const User = userModel(sequelize, Sequelize);
 const Director = directorModel(sequelize, Sequelize);
 const Genre = genreModel(sequelize, Sequelize);
 const Movie = movieModel(sequelize, Sequelize);
@@ -62,4 +64,4 @@ sequelize.sync({ // Solo para el desarrollo
     console.log('Base de datos sincronizada');
 });
 
-module.exports = { Director, Genre, Movie, Actor, Member };
+module.exports = { User, Director, Genre, Movie, Actor, Member };

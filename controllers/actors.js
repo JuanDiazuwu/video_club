@@ -1,5 +1,5 @@
 const express = require('express');
-const { Actor } = require('../db');
+const { Actor, Movie } = require('../db');
 const movie = require('../models/movie');
 
 function create(req, res, next){

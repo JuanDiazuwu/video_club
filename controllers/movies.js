@@ -1,6 +1,7 @@
 const express = require('express');
 const { Movie, Actor } = require('../db');
 const actor = require('../models/actor');
+const director = require('../models/director');
 
 function create(req, res, next){
     const title = req.body.title;
@@ -33,8 +34,12 @@ function replace(req, res, next){
     Movie.findByPk(id)
         .then(object => {
             const title = req.body.title ? req.body.title : "";
+            const genreId = req.body.genreId ? req.body.genreId : "";
+            const directorId = req.body.directorId ? req.body.directorId : "";
             object.update({
-                title : title
+                title : title,
+                genreId : genreId,
+                directorId : directorId
             }).then(obj => res.json(obj))
             .catch(err => res.send(err));
         }).catch(err => res.send(err));
@@ -44,8 +49,12 @@ function update(req, res, next){
     const id = req.params.id;
     Movie.findByPk(id).then(object => {
         const title = req.body.title ? req.body.title : object.title;
+        const genreId = req.body.genreId ? req.body.genreId : object.genreId;
+        const directorId = req.body.directorId ? req.body.directorId: object.directorId;
         object.update({
-            title : title, 
+            title : title,
+            genreId : genreId,
+            directorId : directorId 
         }).then(obj => res.json(obj)).catch(err => res.send(err));
     }).catch(err => res.send(err));
 }
