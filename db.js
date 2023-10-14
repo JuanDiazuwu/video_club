@@ -50,11 +50,29 @@ MovieActor.belongsTo(Movie, {foreingKey: 'movieId'});
 // En una pelicula participan muhos actores
 MovieActor.belongsTo(Actor, {foreingKey: 'actorId'});
 
+// Una pelicula tiene varias copias
+Movie.hasMany(Copy, {as:'copies'});
+
+// Una copia tiene una pelicula
+Copy.belongsTo(Movie, {as:'movie'});
+
+// Una copia tiene muchas reservas
+Copy.hasMany(Booking,{as:'bookings'});
+
+// Una reserva tiene una copia
+Booking.belongsTo(Copy, {as:'copy'});
+
+// Un miembro puede tener muchas reservas
+Member.hasMany(Booking, {as:'bookings'});
+
+// Una reserva tiene un miembro
+Booking.belongsTo(Member, {as:'members'});
+
 Movie.belongsToMany(Actor, {
     foreingKey: 'actorId',
     as: 'actors',
     through: 'movies_actors' // por al tabla
-})
+});
 
 Actor.belongsToMany(Movie,{
     foreingKey: 'movieId',
