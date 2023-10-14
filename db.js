@@ -8,6 +8,7 @@ const actorModel = require('./models/actor');
 const memberModel = require('./models/member');
 const movieActorModel = require('./models/movieActor');
 const bookingModel = require('./models/booking');
+const copyModel = require('./models/copy');
 
 /*
     1) Nombre base de datos
@@ -29,6 +30,7 @@ const Actor = actorModel(sequelize, Sequelize);
 const Member = memberModel(sequelize, Sequelize);
 const MovieActor = movieActorModel(sequelize, Sequelize);
 const Booking = bookingModel(sequelize, Sequelize);
+const Copy = copyModel(sequelize, Sequelize);
 
 // Un genero puede tener muchas peliculas
 Genre.hasMany(Movie, {as:'movies'});
@@ -66,4 +68,4 @@ sequelize.sync({ // Solo para el desarrollo
     console.log('Base de datos sincronizada');
 });
 
-module.exports = { User, Director, Genre, Movie, Actor, Member, Booking };
+module.exports = { User, Director, Genre, Movie, Actor, Member, Booking, Copy };
