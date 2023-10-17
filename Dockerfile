@@ -1,8 +1,8 @@
-FROM node
+FROM node:alpine
 WORKDIR /app
 COPY . .
 RUN npm install
-EXPOSE 80
-CMD PORT=80 npm start
+EXPOSE 6969
+CMD PORT=6969 npm start
 
 #CMD ["npm", "start"]
